@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThS. Trần Văn Trưa – Phát triển thị trường nông nghiệp</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(59, 130, 246, 0.8));
+        }
+        .nav-link:hover {
+            color: #22c55e;
+            border-bottom: 2px solid #22c55e;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #22c55e, #3b82f6);
+            border-radius: 2px;
+        }
+        .crop-card {
+            transition: all 0.3s ease;
+        }
+        .crop-card:hover {
+            transform: translateY(-4px);
+        }
+        .activity-card {
+            background: linear-gradient(135deg, #f0fdf4, #ecfeff);
+        }
+        .scroll-animation {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .scroll-animation.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .avatar-frame {
+            position: relative;
+        }
+        
+        .avatar-frame::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #22c55e, #3b82f6, #22c55e);
+            z-index: -1;
+            animation: spin 3s linear infinite;
+        }
+
+        /* Accordion helpers */
+        .accordion summary {
+            list-style: none;
+        }
+        .accordion summary::-webkit-details-marker {
+            display: none;
+        }
+        .accordion details[open] .accordion-chevron {
+            transform: rotate(180deg);
+        }
+        .accordion .accordion-chevron {
+            transition: transform 200ms ease;
+        }
+    </style>
+</head>
+<body class="bg-sky-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <span class="text-green-700 font-bold text-lg hidden md:block">ThS. Trần Văn Trưa</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 font-medium py-2 transition-all">Trang chủ</a>
+                    <a href="#about" class="nav-link text-gray-700 font-medium py-2 transition-all">Giới thiệu</a>
+                    <a href="#work" class="nav-link text-gray-700 font-medium py-2 transition-all">Công tác</a>
+                    <a href="#activities" class="nav-link text-gray-700 font-medium py-2 transition-all">Hoạt động</a>
+                    <a href="#publications" class="nav-link text-gray-700 font-medium py-2 transition-all">Công bố KH</a>
+                    <a href="#contact" class="nav-link text-gray-700 font-medium py-2 transition-all">Liên hệ</a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700 text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t pt-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#home" class="text-gray-700 font-medium">Trang chủ</a>
+                    <a href="#about" class="text-gray-700 font-medium">Giới thiệu</a>
+                    <a href="#work" class="text-gray-700 font-medium">Công tác</a>
+                    <a href="#activities" class="text-gray-700 font-medium">Hoạt động</a>
+                    <a href="#publications" class="text-gray-700 font-medium">Công bố KH</a>
+                    <a href="#contact" class="text-gray-700 font-medium">Liên hệ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section min-h-screen flex items-center justify-center relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-sky-50"></div>
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+            <!-- Khung hình đại diện - Đặt trên tên -->
+            <div class="mb-6 relative inline-block">
+                <!-- Khung ảnh chính -->
+                <div class="w-36 h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-full border-4 border-white shadow-2xl overflow-hidden mx-auto bg-white/30 backdrop-blur-sm relative group">
+                    <!-- THAY ẢNH ĐẠI DIỆN TẠI ĐÂY -->
+                    <!-- Cách 1: Thay link ảnh online vào src="" -->
+                    <!-- Cách 2: Đặt file ảnh cùng thư mục và ghi tên file vào src="" -->
+                    <img id="avatarImage" 
+                         src="" 
+                         alt="ThS. Trần Văn Trưa" 
+                         class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                         onerror="this.style.display='none'; document.getElementById('avatarPlaceholder').style.display='flex';">
+                    <!-- Placeholder hiển thị khi chưa có ảnh -->
+                    <div id="avatarPlaceholder" class="absolute inset-0 bg-gradient-to-br from-green-500 to-blue-600 flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-user text-white text-5xl md:text-6xl mb-2"></i>
+                            <p class="text-white/80 text-xs">Chèn ảnh tại đây</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Viền trang trí xoay -->
+                <div class="absolute -inset-2 rounded-full border-4 border-dashed border-green-400/60" style="animation: spin 15s linear infinite;"></div>
+                <div class="absolute -inset-4 rounded-full border-2 border-dotted border-white/40" style="animation: spin 20s linear infinite reverse;"></div>
+                <!-- Badge chuyên gia -->
+                <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg whitespace-nowrap">
+                    <i class="fas fa-award mr-1"></i>Chuyên gia Nông nghiệp
+                </div>
+            </div>
+            
+            <!-- Tên đặt dưới hình đại diện -->
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 drop-shadow-2xl mt-4">
+                ThS. Trần Văn Trưa
+            </h1>
+            <p class="text-xl md:text-3xl text-green-300 font-medium mb-8 drop-shadow-lg">
+                Phát triển thị trường nông nghiệp
+            </p>
+            <p class="text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-10">
+                Chuyên gia với hơn 20 năm kinh nghiệm trong lĩnh vực nông dược, nghiên cứu và phát triển thị trường nông nghiệp tại Đồng bằng sông Cửu Long và Miền Đông Nam Bộ
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#about" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-xl hover:shadow-2xl">
+                    <i class="fas fa-user-tie mr-2"></i>Tìm hiểu thêm
+                </a>
+                <a href="#contact" class="bg-white/20 backdrop-blur-md hover:bg-white/30 text-white border-2 border-white px-8 py-4 rounded-full font-semibold text-lg transition-all">
+                    <i class="fas fa-phone mr-2"></i>Liên hệ ngay
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-white text-3xl"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative overflow-hidden">
+        <!-- Hình nền ruộng lúa xanh Việt Nam -->
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=80" 
+                 alt="Ruộng lúa xanh Việt Nam" 
+                 class="w-full h-full object-cover">
+            <!-- Overlay để nội dung dễ đọc -->
+            <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/90 to-white/80"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-green-700 section-title">Giới thiệu</h2>
+            </div>
+            <div class="max-w-4xl mx-auto">
+                <div class="scroll-animation">
+                    <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-green-100">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-graduation-cap text-green-600 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-green-700">Chuyên môn</h3>
+                                <p class="text-gray-600">Học vị & Chuyên ngành</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 text-lg mb-6 leading-relaxed">
+                            <strong class="text-green-700">Thạc sĩ chuyên ngành Khoa học Cây trồng</strong><br>
+                            Khoa Nông nghiệp, Đại học Cần Thơ
+                        </p>
+                        
+                        <h4 class="text-xl font-bold text-green-700 mb-4 flex items-center">
+                            <i class="fas fa-briefcase mr-3"></i>Quá trình công tác
+                        </h4>
+                        <div class="space-y-4">
+                            <div class="flex items-start p-4 bg-sky-50/80 rounded-xl border-l-4 border-green-500">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mt-2 mr-4"></div>
+                                <div>
+                                    <p class="font-semibold text-green-700">2002 - 2004</p>
+                                    <p class="text-gray-700">Nghiên cứu viên, Khoa Nông Nghiệp – Đại học Cần Thơ</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 bg-green-50/80 rounded-xl border-l-4 border-blue-500">
+                                <div class="w-3 h-3 bg-blue-500 rounded-full mt-2 mr-4"></div>
+                                <div>
+                                    <p class="font-semibold text-green-700">2004 - Nay</p>
+                                    <p class="text-gray-700">Chuyên viên phát triển thị trường, Cty TNHH Syngenta Việt Nam</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Badge kinh nghiệm -->
+                    <div class="flex justify-center mt-8">
+                        <div class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-2xl shadow-xl flex items-center space-x-4">
+                            <div class="text-center">
+                                <p class="text-4xl font-bold">20+</p>
+                                <p class="text-sm">Năm kinh nghiệm</p>
+                            </div>
+                            <div class="w-px h-12 bg-white/30"></div>
+                            <div class="text-center">
+                                <p class="text-4xl font-bold"><i class="fas fa-wheat-awn"></i></p>
+                                <p class="text-sm">Đồng bằng sông Cửu Long</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Harvest Info Section - Không có hình nền -->
+    <section class="py-16 bg-gradient-to-b from-white to-sky-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-3xl shadow-2xl scroll-animation p-8 md:p-12">
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-wheat-awn text-white text-2xl"></i>
+                        </div>
+                        <span class="text-amber-300 font-semibold text-xl">Mùa vàng bội thu</span>
+                    </div>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6 text-center">
+                        Thu hoạch lúa tại Đồng bằng sông Cửu Long
+                    </h3>
+                    <p class="text-white/90 text-lg md:text-xl leading-relaxed text-center mb-8">
+                        Vùng đất trù phú với những cánh đồng lúa bạt ngàn, nơi người nông dân Việt Nam 
+                        cần mẫn gặt hái thành quả lao động. Đồng bằng sông Cửu Long - vựa lúa lớn nhất cả nước.
+                    </p>
+                    
+                    <!-- Thống kê -->
+                    <div class="flex flex-wrap justify-center gap-6">
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl px-6 py-4 text-center">
+                            <p class="text-amber-300 text-3xl font-bold">13</p>
+                            <p class="text-white/80 text-sm">Tỉnh thành</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl px-6 py-4 text-center">
+                            <p class="text-amber-300 text-3xl font-bold">50%</p>
+                            <p class="text-white/80 text-sm">Sản lượng lúa cả nước</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl px-6 py-4 text-center">
+                            <p class="text-amber-300 text-3xl font-bold">3</p>
+                            <p class="text-white/80 text-sm">Vụ mùa/năm</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl px-6 py-4 text-center">
+                            <p class="text-amber-300 text-3xl font-bold"><i class="fas fa-map-marker-alt"></i></p>
+                            <p class="text-white/80 text-sm">ĐBSCL & Đông Nam Bộ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="py-20 bg-gradient-to-b from-sky-100 to-sky-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-green-700 section-title">Công tác hiện tại</h2>
+            </div>
+            
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden scroll-animation">
+                <div class="grid lg:grid-cols-2">
+                    <div class="p-8 lg:p-12">
+                        <div class="flex items-center mb-8">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Syngenta_logo.svg/1200px-Syngenta_logo.svg.png" 
+                                 alt="" 
+                                 class="h-16 mr-4 object-contain">
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-building text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Đơn vị công tác</p>
+                                    <p class="text-lg font-semibold text-gray-800">Công ty TNHH Syngenta Việt Nam</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-user-tie text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Chức vụ</p>
+                                    <p class="text-lg font-semibold text-gray-800">Giám đốc Phát triển thị trường nông nghiệp</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-award text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Kinh nghiệm</p>
+                                    <p class="text-lg font-semibold text-gray-800">20 năm công tác trong lĩnh vực nông dược</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Điện thoại liên hệ</p>
+                                    <p class="text-lg font-semibold text-gray-800">0919 168 062</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-red-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Email</p>
+                                    <p class="text-lg font-semibold text-gray-800">trantrua68@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative h-80 lg:h-auto">
+                        <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80" 
+                             alt="Cánh đồng lúa thu hoạch" 
+                             class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-green-900/50 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 text-white">
+                            <p class="text-lg font-medium">Phát triển thị trường nông nghiệp bền vững</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crops Monitoring Section -->
+    <section class="py-20 bg-gradient-to-b from-sky-50 to-green-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-green-700 section-title">Nắm bắt tình hình mùa vụ</h2>
+                <p class="mt-8 text-gray-600 text-lg max-w-3xl mx-auto">
+                    Theo dõi và phân tích tình hình mùa vụ các loại cây trồng tại Đồng bằng sông Cửu Long và Miền Đông Nam Bộ
+                </p>
+            </div>
+            
+            <div class="accordion bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-green-100 overflow-hidden">
+                <details open>
+                    <summary class="flex items-center justify-between gap-4 px-6 py-5 bg-gradient-to-r from-green-600 to-emerald-700 text-white cursor-pointer select-none">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
+                                <i class="fas fa-seedling text-2xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-white/80 text-sm font-medium">Mục 3.1</p>
+                                <h3 class="text-xl md:text-2xl font-bold">Nắm bắt tình hình mùa vụ</h3>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="hidden md:inline text-white/80 text-sm">Nhấn để thu gọn/mở rộng</span>
+                            <i class="fas fa-chevron-down accordion-chevron"></i>
+                        </div>
+                    </summary>
+
+                    <div class="px-6 py-6">
+                        <p class="text-gray-700 text-base md:text-lg mb-6 max-w-4xl">
+                            Theo dõi và phân tích tình hình mùa vụ các loại cây trồng tại <strong>Đồng bằng sông Cửu Long</strong> và <strong>Miền Đông Nam Bộ</strong>.
+                            (Bản này <strong>không dùng hình nền/ảnh</strong>, chỉ sử dụng <strong>icon</strong> theo yêu cầu.)
+                        </p>
+
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <!-- Lúa -->
+                            <div class="crop-card bg-white rounded-2xl p-6 shadow-lg border border-green-50 scroll-animation">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-wheat-awn text-amber-700 text-xl"></i>
+                                    </div>
+                                    <span class="text-[11px] font-semibold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">Cây trồng chủ lực</span>
+                                </div>
+                                <ul class="mt-4 space-y-2 text-sm text-gray-700">
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Đối tượng:</span><span class="font-semibold">Lúa</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Mùa vụ:</span><span>Đông Xuân • Hè Thu • Thu Đông</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Theo dõi:</span><span>Sinh trưởng, sâu bệnh, năng suất</span></li>
+                                </ul>
+                            </div>
+
+                            <!-- Sầu riêng -->
+                            <div class="crop-card bg-white rounded-2xl p-6 shadow-lg border border-green-50 scroll-animation">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-apple-whole text-green-700 text-xl"></i>
+                                    </div>
+                                    <span class="text-[11px] font-semibold bg-sky-50 text-sky-700 px-2.5 py-1 rounded-full">Cây ăn trái</span>
+                                </div>
+                                <ul class="mt-4 space-y-2 text-sm text-gray-700">
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Đối tượng:</span><span class="font-semibold">Sầu riêng</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Giai đoạn:</span><span>Ra hoa • Đậu trái • Nuôi trái</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Theo dõi:</span><span>Sâu đục trái, nấm bệnh, dinh dưỡng</span></li>
+                                </ul>
+                            </div>
+
+                            <!-- Xoài -->
+                            <div class="crop-card bg-white rounded-2xl p-6 shadow-lg border border-green-50 scroll-animation">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="w-12 h-12 bg-yellow-100 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-lemon text-yellow-700 text-xl"></i>
+                                    </div>
+                                    <span class="text-[11px] font-semibold bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full">Cây ăn trái</span>
+                                </div>
+                                <ul class="mt-4 space-y-2 text-sm text-gray-700">
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Đối tượng:</span><span class="font-semibold">Xoài</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Giai đoạn:</span><span>Xử lý ra hoa • Nuôi trái • Thu hoạch</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Theo dõi:</span><span>Bọ trĩ, bệnh thán thư, ruồi đục trái</span></li>
+                                </ul>
+                            </div>
+
+                            <!-- Thanh long -->
+                            <div class="crop-card bg-white rounded-2xl p-6 shadow-lg border border-green-50 scroll-animation">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-fire text-pink-700 text-xl"></i>
+                                    </div>
+                                    <span class="text-[11px] font-semibold bg-rose-50 text-rose-700 px-2.5 py-1 rounded-full">Cây ăn trái</span>
+                                </div>
+                                <ul class="mt-4 space-y-2 text-sm text-gray-700">
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Đối tượng:</span><span class="font-semibold">Thanh long</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Mùa vụ:</span><span>Chính vụ • Mùa nghịch (xử lý đèn)</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Theo dõi:</span><span>Đốm nâu, thối cành, bọ xít</span></li>
+                                </ul>
+                            </div>
+
+                            <!-- Cây có múi -->
+                            <div class="crop-card bg-white rounded-2xl p-6 shadow-lg border border-green-50 scroll-animation">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-circle text-orange-600 text-xl"></i>
+                                    </div>
+                                    <span class="text-[11px] font-semibold bg-orange-50 text-orange-700 px-2.5 py-1 rounded-full">Cây ăn trái</span>
+                                </div>
+                                <ul class="mt-4 space-y-2 text-sm text-gray-700">
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Đối tượng:</span><span class="font-semibold">Cây có múi</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Trọng điểm:</span><span>Cam • Bưởi • Quýt</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Theo dõi:</span><span>Vàng lá gân xanh, sâu vẽ bùa, rầy</span></li>
+                                </ul>
+                            </div>
+
+                            <!-- Dưa hấu -->
+                            <div class="crop-card bg-white rounded-2xl p-6 shadow-lg border border-green-50 scroll-animation">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-apple-whole text-red-600 text-xl"></i>
+                                    </div>
+                                    <span class="text-[11px] font-semibold bg-red-50 text-red-700 px-2.5 py-1 rounded-full">Rau màu</span>
+                                </div>
+                                <ul class="mt-4 space-y-2 text-sm text-gray-700">
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Đối tượng:</span><span class="font-semibold">Dưa hấu</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Thời vụ:</span><span>Vụ Tết • Vụ hè</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Theo dõi:</span><span>Sương mai, phấn trắng, bọ trĩ</span></li>
+                                </ul>
+                            </div>
+
+                            <!-- Rau màu -->
+                            <div class="crop-card bg-white rounded-2xl p-6 shadow-lg border border-green-50 scroll-animation">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-carrot text-emerald-700 text-xl"></i>
+                                    </div>
+                                    <span class="text-[11px] font-semibold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">Rau màu</span>
+                                </div>
+                                <ul class="mt-4 space-y-2 text-sm text-gray-700">
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Đối tượng:</span><span class="font-semibold">Rau màu</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Tiêu chuẩn:</span><span>Rau an toàn • VietGAP</span></li>
+                                    <li class="flex gap-2"><span class="text-gray-500 w-24">Theo dõi:</span><span>Sâu tơ, sâu xanh, bệnh héo rũ</span></li>
+                                </ul>
+                            </div>
+
+                            <!-- Khu vực -->
+                            <div class="crop-card bg-gradient-to-br from-green-600 to-blue-600 rounded-2xl p-6 shadow-lg scroll-animation">
+                                <div class="flex items-start justify-between gap-3 text-white">
+                                    <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-map-location-dot text-2xl"></i>
+                                    </div>
+                                    <span class="text-[11px] font-semibold bg-white/15 text-white px-2.5 py-1 rounded-full">Phạm vi</span>
+                                </div>
+                                <ul class="mt-4 space-y-2 text-sm text-white/90">
+                                    <li class="flex gap-2"><span class="text-white/70 w-24">Khu vực:</span><span class="font-semibold">ĐBSCL & Đông Nam Bộ</span></li>
+                                    <li class="flex gap-2"><span class="text-white/70 w-24">Mục tiêu:</span><span>Nắm bắt mùa vụ theo tiểu vùng</span></li>
+                                    <li class="flex gap-2"><span class="text-white/70 w-24">Đầu ra:</span><span>Báo cáo, khuyến cáo, kế hoạch hoạt động</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pest Forecasting Section -->
+    <section class="py-20 bg-gradient-to-b from-green-50 to-sky-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-green-700 section-title">Dự báo tình hình dịch hại</h2>
+                <p class="mt-8 text-gray-600 text-lg max-w-3xl mx-auto">
+                    Xây dựng kế hoạch quảng bá phù hợp với tình hình mùa vụ và dịch hại theo từng khu vực
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl p-8 shadow-xl card-hover transition-all duration-300 scroll-animation">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mr-4">
+                            <i class="fas fa-bug text-red-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-green-700">Sâu hại cây trồng</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Phân tích chu kỳ sinh trưởng sâu hại</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Dự báo thời điểm bùng phát</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Khuyến cáo biện pháp phòng trừ</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Lập kế hoạch quảng bá sản phẩm</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-8 shadow-xl card-hover transition-all duration-300 scroll-animation">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mr-4">
+                            <i class="fas fa-virus text-amber-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-green-700">Bệnh hại cây trồng</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Theo dõi điều kiện thời tiết</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Cảnh báo dịch bệnh sớm</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Hướng dẫn phòng trừ hiệu quả</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Chiến lược marketing theo mùa</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section id="activities" class="py-20 bg-gradient-to-b from-sky-50 to-sky-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-green-700 section-title">Hoạt động tạo nhu cầu</h2>
+            </div>
+            
+            <!-- Hoạt động trên cây lúa -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-green-700 mb-8 flex items-center justify-center">
+                    <i class="fas fa-wheat-awn text-amber-500 mr-3"></i>
+                    Hoạt động trên Cây Lúa
+                </h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="activity-card rounded-2xl p-6 shadow-lg card-hover transition-all duration-300 scroll-animation">
+                        <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=400&q=80" 
+                             alt="Hội thảo nông dân" 
+                             class="w-full h-48 object-cover rounded-xl mb-4">
+                        <div class="text-center">
+                            <div class="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3 -mt-10 relative z-10 shadow-lg">
+                                <i class="fas fa-users text-white text-xl"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-green-700">Hội thảo nông dân</h4>
+                            <p class="text-gray-600 mt-2">Trao đổi kiến thức, chia sẻ kinh nghiệm canh tác lúa hiệu quả</p>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-card rounded-2xl p-6 shadow-lg card-hover transition-all duration-300 scroll-animation">
+                        <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&q=80" 
+                             alt="Trình diễn ngoài ruộng" 
+                             class="w-full h-48 object-cover rounded-xl mb-4">
+                        <div class="text-center">
+                            <div class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3 -mt-10 relative z-10 shadow-lg">
+                                <i class="fas fa-tractor text-white text-xl"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-green-700">Trình diễn ngoài ruộng</h4>
+                            <p class="text-gray-600 mt-2">Demo sản phẩm trực tiếp trên đồng ruộng cho nông dân</p>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-card rounded-2xl p-6 shadow-lg card-hover transition-all duration-300 scroll-animation">
+                        <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&q=80" 
+                             alt="Tọa đàm mạng xã hội" 
+                             class="w-full h-48 object-cover rounded-xl mb-4">
+                        <div class="text-center">
+                            <div class="w-14 h-14 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-3 -mt-10 relative z-10 shadow-lg">
+                                <i class="fab fa-facebook text-white text-xl"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-green-700">Tọa đàm trên mạng xã hội</h4>
+                            <p class="text-gray-600 mt-2">Livestream, video hướng dẫn kỹ thuật trên các nền tảng số</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hoạt động trên cây ăn trái -->
+            <div>
+                <h3 class="text-2xl font-bold text-green-700 mb-8 flex items-center justify-center">
+                    <i class="fas fa-apple-whole text-green-500 mr-3"></i>
+                    Hoạt động trên Cây ăn trái & Rau màu
+                </h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div class="activity-card rounded-2xl p-5 shadow-lg card-hover transition-all duration-300 scroll-animation">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-chalkboard-user text-white text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-green-700 text-center">Hội thảo nông dân</h4>
+                        <p class="text-gray-600 text-sm mt-2 text-center">Chia sẻ kỹ thuật canh tác</p>
+                    </div>
+                    
+                    <div class="activity-card rounded-2xl p-5 shadow-lg card-hover transition-all duration-300 scroll-animation">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-tree text-white text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-green-700 text-center">Thăm vườn cùng nông dân</h4>
+                        <p class="text-gray-600 text-sm mt-2 text-center">Tư vấn tại vườn trực tiếp</p>
+                    </div>
+                    
+                    <div class="activity-card rounded-2xl p-5 shadow-lg card-hover transition-all duration-300 scroll-animation">
+                        <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-headset text-white text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-green-700 text-center">Tư vấn kỹ thuật</h4>
+                        <p class="text-gray-600 text-sm mt-2 text-center">Hỗ trợ chuyên môn 24/7</p>
+                    </div>
+                    
+                    <div class="activity-card rounded-2xl p-5 shadow-lg card-hover transition-all duration-300 scroll-animation">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-comments text-white text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-green-700 text-center">Tọa đàm trực tiếp</h4>
+                        <p class="text-gray-600 text-sm mt-2 text-center">Giao lưu với nông dân</p>
+                    </div>
+                    
+                    <div class="activity-card rounded-2xl p-5 shadow-lg card-hover transition-all duration-300 scroll-animation">
+                        <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-rose-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-gamepad text-white text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-green-700 text-center">Trò chơi Kahoot</h4>
+                        <p class="text-gray-600 text-sm mt-2 text-center">Học qua trò chơi tương tác</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery -->
+            <div class="mt-16">
+                <h3 class="text-2xl font-bold text-green-700 mb-8 text-center">Hình ảnh hoạt động</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl scroll-animation">
+                        <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=400&q=80" 
+                             alt="Thu hoạch lúa" 
+                             class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <p class="text-white font-medium">Mùa thu hoạch lúa</p>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl scroll-animation">
+                        <img src="https://images.unsplash.com/photo-1596547609652-9cf5d8c76921?w=400&q=80" 
+                             alt="Vườn sầu riêng" 
+                             class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <p class="text-white font-medium">Vườn sầu riêng</p>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl scroll-animation">
+                        <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&q=80" 
+                             alt="Thanh long" 
+                             class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <p class="text-white font-medium">Vườn thanh long</p>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl scroll-animation">
+                        <img src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=400&q=80" 
+                             alt="Xoài cát" 
+                             class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <p class="text-white font-medium">Xoài cát Hòa Lộc</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications" class="py-20 bg-gradient-to-b from-sky-100 to-sky-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-green-700 section-title">Các bài khoa học đã công bố</h2>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="bg-white rounded-2xl p-8 shadow-xl card-hover transition-all duration-300 scroll-animation">
+                    <div class="flex items-start">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mr-6 flex-shrink-0">
+                            <i class="fas fa-file-lines text-blue-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <span class="inline-block bg-green-100 text-green-700 text-sm font-medium px-3 py-1 rounded-full mb-3">2003</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">
+                                Điều tra côn trùng, đặc tính sinh học và biện pháp xử lý hóa học trong kho bảo quản nông sản sau thu hoạch tại An Giang và Cần Thơ
+                            </h3>
+                            <p class="text-gray-600 mb-3">
+                                <strong>Tác giả:</strong> Trần Văn Hai, <span class="text-green-700 font-semibold">Trần Văn Trưa</span>
+                            </p>
+                            <p class="text-gray-600">
+                                <i class="fas fa-book-open mr-2 text-blue-500"></i>
+                                Tạp chí Khoa học Đại học Cần Thơ 2003. Chuyên ngành Bảo vệ thực vật. Trang 138-147.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-xl card-hover transition-all duration-300 scroll-animation">
+                    <div class="flex items-start">
+                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mr-6 flex-shrink-0">
+                            <i class="fas fa-file-lines text-green-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <span class="inline-block bg-blue-100 text-blue-700 text-sm font-medium px-3 py-1 rounded-full mb-3">2014</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">
+                                Hiệu quả của bóng đèn Compact đến sự ra hoa mùa nghịch cây thanh long (Hylocereus undatus) tại huyện Châu Thành, tỉnh Long An
+                            </h3>
+                            <p class="text-gray-600 mb-3">
+                                <strong>Tác giả:</strong> Lê Văn Bé, <span class="text-green-700 font-semibold">Trần Văn Trưa</span>, Trương Quốc Thanh, Nguyễn Đoàn Thăng, Nguyễn Thanh Thiện
+                            </p>
+                            <p class="text-gray-600">
+                                <i class="fas fa-book-open mr-2 text-blue-500"></i>
+                                Tạp chí Khoa học Đại học Cần Thơ 2015. Chuyên đề Nông nghiệp. Tập 4. Trang 6-13.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-b from-sky-50 to-green-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-green-700 section-title">Liên hệ</h2>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="scroll-animation">
+                    <div class="bg-white rounded-2xl p-8 shadow-xl h-full">
+                        <h3 class="text-2xl font-bold text-green-700 mb-6">Thông tin liên hệ</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-center p-4 bg-sky-50 rounded-xl">
+                                <div class="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-user text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Họ và tên</p>
+                                    <p class="text-lg font-semibold text-gray-800">ThS. Trần Văn Trưa</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-green-50 rounded-xl">
+                                <div class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-building text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Đơn vị công tác</p>
+                                    <p class="text-lg font-semibold text-gray-800">Công ty TNHH Syngenta Việt Nam</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-sky-50 rounded-xl">
+                                <div class="w-14 h-14 bg-emerald-500 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Điện thoại</p>
+                                    <a href="tel:0919168062" class="text-lg font-semibold text-green-600 hover:text-green-700">0919 168 062</a>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-green-50 rounded-xl">
+                                <div class="w-14 h-14 bg-red-500 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Email</p>
+                                    <a href="mailto:trantrua68@gmail.com" class="text-lg font-semibold text-green-600 hover:text-green-700">trantrua68@gmail.com</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 flex space-x-4">
+                            <a href="#" class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-sky-500 rounded-full flex items-center justify-center text-white hover:bg-sky-600 transition-colors">
+                                <i class="fab fa-zalo text-xl">Z</i>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors">
+                                <i class="fab fa-whatsapp text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-animation">
+                    <div class="bg-white rounded-2xl p-8 shadow-xl">
+                        <h3 class="text-2xl font-bold text-green-700 mb-6">Gửi tin nhắn</h3>
+                        <form id="contactForm" class="space-y-4">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Họ và tên</label>
+                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all" placeholder="Nhập họ và tên">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Email</label>
+                                <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all" placeholder="Nhập email">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Số điện thoại</label>
+                                <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all" placeholder="Nhập số điện thoại">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Nội dung</label>
+                                <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all resize-none" placeholder="Nhập nội dung tin nhắn"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:from-green-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl">
+                                <i class="fas fa-paper-plane mr-2"></i>Gửi tin nhắn
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-green-800 to-green-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-leaf text-green-300 text-xl"></i>
+                        </div>
+                        <span class="font-bold text-xl">ThS. Trần Văn Trưa</span>
+                    </div>
+                    <p class="text-green-200">Chuyên gia phát triển thị trường nông nghiệp với hơn 20 năm kinh nghiệm trong lĩnh vực nông dược.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Liên kết nhanh</h4>
+                    <ul class="space-y-2 text-green-200">
+                        <li><a href="#home" class="hover:text-white transition-colors">Trang chủ</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">Giới thiệu</a></li>
+                        <li><a href="#work" class="hover:text-white transition-colors">Công tác</a></li>
+                        <li><a href="#activities" class="hover:text-white transition-colors">Hoạt động</a></li>
+                        <li><a href="#publications" class="hover:text-white transition-colors">Công bố khoa học</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Kết nối</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="mailto:trantrua68@gmail.com" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-green-700 pt-8 text-center text-green-300">
+                <p>&copy; 2024 ThS. Trần Văn Trưa. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-14 h-14 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-all opacity-0 pointer-events-none z-50">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.remove('opacity-0', 'pointer-events-none');
+                backToTop.classList.add('opacity-100');
+            } else {
+                backToTop.classList.add('opacity-0', 'pointer-events-none');
+                backToTop.classList.remove('opacity-100');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Scroll animation
+        const scrollElements = document.querySelectorAll('.scroll-animation');
+        
+        const elementInView = (el, offset = 100) => {
+            const elementTop = el.getBoundingClientRect().top;
+            return (elementTop <= (window.innerHeight || document.documentElement.clientHeight) - offset);
+        };
+
+        const displayScrollElement = (element) => {
+            element.classList.add('visible');
+        };
+
+        const handleScrollAnimation = () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el)) {
+                    displayScrollElement(el);
+                }
+            });
+        };
+
+        window.addEventListener('scroll', handleScrollAnimation);
+        window.addEventListener('load', handleScrollAnimation);
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Cảm ơn bạn đã gửi tin nhắn! Chúng tôi sẽ liên hệ lại sớm nhất.');
+            this.reset();
+        });
+
+        // Navbar background on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('shadow-xl');
+            } else {
+                nav.classList.remove('shadow-xl');
+            }
+        });
+    </script>
+</body>
+</html>
